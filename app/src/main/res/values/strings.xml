@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">ContactBook</string>
+    <string name="phone_button_text">Позвонить</string>
+    <string name="email_button_text">Написать email</string>
+    <string name="map_button_text">Показать офис на карте</string>
+    <string name="contact_button_text">Поделиться контактом</string>
+</resources>
