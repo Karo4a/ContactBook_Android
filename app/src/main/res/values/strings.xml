@@ -4,4 +4,6 @@
     <string name="email_button_text">Написать email</string>
     <string name="map_button_text">Показать офис на карте</string>
     <string name="contact_button_text">Поделиться контактом</string>
+    <string name="email_theme_text">Обращение</string>
+    <string name="map_chooser_title">Поделиться через...</string>
 </resources>

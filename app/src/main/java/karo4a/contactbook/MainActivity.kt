@@ -43,10 +43,7 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-fun callPhoneNumber(phoneNumber: String,
-                    context: Context,
-) {
-    val intent = Intent(Intent.ACTION_DIAL, "tel:$phoneNumber".toUri())
+fun saveStartActivity(intent: Intent, context: Context) {
     try
     {
         context.startActivity(intent)
@@ -55,6 +52,13 @@ fun callPhoneNumber(phoneNumber: String,
     {
         Toast.makeText(context, ex.message, Toast.LENGTH_SHORT).show()
     }
+}
+
+fun callPhoneNumber(phoneNumber: String,
+                    context: Context,
+) {
+    val intent = Intent(Intent.ACTION_DIAL, "tel:$phoneNumber".toUri())
+    saveStartActivity(intent, context)
 }
 
 fun sendEmail(email: String,
@@ -66,14 +70,7 @@ fun sendEmail(email: String,
         putExtra(Intent.EXTRA_EMAIL, arrayOf(email))
         putExtra(Intent.EXTRA_SUBJECT, theme)
     }
-    try
-    {
-        context.startActivity(intent)
-    }
-    catch (ex: ActivityNotFoundException)
-    {
-        Toast.makeText(context, ex.message, Toast.LENGTH_SHORT).show()
-    }
+    saveStartActivity(intent, context)
 }
 
 fun showOnMap(latitude: Double,
@@ -83,14 +80,7 @@ fun showOnMap(latitude: Double,
 ) {
     val intent = Intent(Intent.ACTION_VIEW,
         "geo:0,0?q=$latitude,$longitude($label)".toUri())
-    try
-    {
-        context.startActivity(intent)
-    }
-    catch (ex: ActivityNotFoundException)
-    {
-        Toast.makeText(context, ex.message, Toast.LENGTH_SHORT).show()
-    }
+    saveStartActivity(intent, context)
 }
 
 fun shareText(text: String,
@@ -102,14 +92,7 @@ fun shareText(text: String,
         putExtra(Intent.EXTRA_TEXT, text)
     }
     val chooser = Intent.createChooser(intent, chooserTitle)
-    try
-    {
-        context.startActivity(chooser)
-    }
-    catch (ex: ActivityNotFoundException)
-    {
-        Toast.makeText(context, ex.message, Toast.LENGTH_SHORT).show()
-    }
+    saveStartActivity(chooser, context)
 }
 
 @Composable
@@ -128,7 +111,8 @@ fun MainMenu(modifier: Modifier = Modifier) {
                 Text(stringResource(R.string.phone_button_text))
             }
             Button(
-                onClick = { sendEmail("contact@example.com", "Обращение", context) },
+                onClick = { sendEmail("contact@example.com",
+                    context.getString(R.string.email_theme_text), context) },
                 modifier = Modifier.fillMaxWidth(),
             ) {
                 Text(stringResource(R.string.email_button_text))
@@ -144,7 +128,7 @@ fun MainMenu(modifier: Modifier = Modifier) {
             }
             Button(
                 onClick = { shareText("Контакт: +7 (495) 123-45-67, contact@example.com",
-                    "Поделиться через...",
+                    context.getString(R.string.map_chooser_title),
                     context) },
                 modifier = Modifier.fillMaxWidth(),
             ) {
